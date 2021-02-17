@@ -1,0 +1,27 @@
+.list {
+  list-style: none;
+  padding-left: 0;
+  max-height: 150px;
+  overflow-y: scroll;
+  border: 1px solid black;
+}
+
+.list__text {
+  text-align: center;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.list__item {
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  padding: 8px;
+  width: 100%;
+  text-align: left;
+  outline: none;
+}
+
+.list__item:hover {
+  background-color: lightblue;
+}

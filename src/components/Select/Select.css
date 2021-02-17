@@ -1,0 +1,8 @@
+.select {
+  display: flex;
+  flex-direction: column;
+}
+
+.select__input::placeholder {
+  color: black;
+}
