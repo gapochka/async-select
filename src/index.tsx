@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import 'normalize.css';
 
+import App from 'App';
 import store from 'store/store';
 
-import App from './App';
-import './index.css';
+import 'index.css';
 
 ReactDOM.render(
   <Provider store={store}>
