@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { changeValue } from 'store/actions';
 import { getValue } from 'selectors';
 import Select from 'components/Select';
+import { changeValue } from 'store/actions';
 
-import './App.css';
-import items from './items.json';
+import 'App.css';
+import items from 'items.json';
 
-const filterItems = inputValue => items.filter(i => i.label.toLowerCase().includes(inputValue.toLowerCase()));
+interface OptionsType {
+  label: string;
+  value: string;
+}
 
-const loadOptions = (inputValue, callback) => {
+const filterItems = (inputValue: string) => items.filter(i => i.label.toLowerCase().includes(inputValue.toLowerCase()));
+
+const loadOptions = (inputValue: string, callback: (options: OptionsType[]) => void) => {
   setTimeout(() => {
     callback(filterItems(inputValue));
   }, 1000);
@@ -21,9 +26,9 @@ const App = () => {
   const { label } = useSelector(getValue);
   const [inputValue, setInputValue] = useState('');
 
-  const handleInputChange = value => setInputValue(value);
+  const handleInputChange = (value: string) => setInputValue(value);
   const handleBlur = () => setInputValue('');
-  const handleChange = value => dispatch(changeValue(value));
+  const handleChange = (value: OptionsType) => dispatch(changeValue(value));
 
   return (
     <>
