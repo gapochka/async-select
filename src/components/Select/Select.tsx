@@ -1,30 +1,43 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import OutsideClick from 'components/OutsideClick';
 
 import './Select.css';
 import List from './List';
 
+interface OptionsType {
+  label: string;
+  value: string;
+}
+
+interface SelectProps {
+  placeholder: string;
+  value: string;
+  loadOptions: (value: string, setSuggestions: (options: OptionsType[]) => void) => void;
+  onChange: (value: OptionsType) => void;
+  onBlur: (event: React.FormEvent<HTMLInputElement>) => void;
+  onInputChange: (value: string) => void;
+}
+
 const getUniqId = () => Symbol('id');
 
-const Select = ({ placeholder, value, loadOptions, onChange, onBlur, onInputChange }) => {
+const Select: React.FC<SelectProps> = ({ placeholder, value, loadOptions, onChange, onBlur, onInputChange }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState<OptionsType[]>([]);
   const lastCallId = useRef(getUniqId());
 
   const handleOutsideClick = () => setShowOptions(false);
 
-  const setSuggestions = id => val => {
+  const setSuggestions = (id: symbol) => (newOptions: OptionsType[]) => {
     if (id === lastCallId.current) {
-      setOptions(val);
+      setOptions(newOptions);
     }
 
     setIsLoading(false);
   };
 
-  const handleLoadOptions = val => {
+  const handleLoadOptions = (val: string) => {
     setIsLoading(true);
 
     const uniqId = getUniqId();
@@ -37,13 +50,13 @@ const Select = ({ placeholder, value, loadOptions, onChange, onBlur, onInputChan
 
   const handleFocus = () => setShowOptions(true);
 
-  const handleChange = val => {
+  const handleChange = (val: OptionsType) => {
     setShowOptions(false);
     onChange(val);
   };
 
-  const handleInputChange = event => {
-    const val = event.target.value;
+  const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const val = event.currentTarget?.value;
 
     handleLoadOptions(val);
     onInputChange(val);
@@ -61,28 +74,10 @@ const Select = ({ placeholder, value, loadOptions, onChange, onBlur, onInputChan
           onFocus={handleFocus}
           onBlur={onBlur}
         />
-        {showOptions && <List items={options} isLoading={isLoading} onClick={handleChange} />}
+        {showOptions && <List options={options} isLoading={isLoading} onClick={handleChange} />}
       </div>
     </OutsideClick>
   );
-};
-
-Select.propTypes = {
-  placeholder: PropTypes.string,
-  value: PropTypes.string,
-  loadOptions: PropTypes.func,
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  onInputChange: PropTypes.func,
-};
-
-Select.defaultProps = {
-  placeholder: '',
-  value: '',
-  loadOptions: () => {},
-  onBlur: () => {},
-  onChange: () => {},
-  onInputChange: () => {},
 };
 
 export default Select;
