@@ -1,69 +1,28 @@
 {
-  "parser": "babel-eslint",
-  "extends": [
-    "airbnb",
-    "prettier",
-    "prettier/react"
-  ],
-  "plugins": [
-    "prettier",
-    "react-hooks"
-  ],
-  "rules": {
-    "prettier/prettier": "error",
-    "jsx-a11y/anchor-is-valid": "off",
-    "arrow-body-style": [
-      "error",
-      "as-needed"
-    ],
-    "import/no-unresolved": "error",
-    "no-console": "error",
-    "no-unused-vars": [
-      "error",
-      {
-        "argsIgnorePattern": "^_"
-      }
-    ],
-    "newline-per-chained-call": "error",
-    "prefer-template": "error",
-    "react/jsx-closing-bracket-location": "error",
-    "react/jsx-filename-extension": [
-      "error",
-      {
-        "extensions": [
-          ".js"
-        ]
-      }
-    ],
-    "react/jsx-first-prop-new-line": [
-      "error",
-      "multiline"
-    ],
-    "react-hooks/rules-of-hooks": "error",
-    "quotes": [
-      "error",
-      "single"
-    ]
-  },
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
-  },
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "ecmaVersion": 2020,
     "sourceType": "module",
-    "ecmaVersion": 9,
     "ecmaFeatures": {
       "jsx": true
     }
   },
   "settings": {
-    "import/resolver": {
-      "node": {
-        "paths": [
-          "./src"
-        ]
-      }
+    "react": {
+      "version": "detect"
     }
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/triple-slash-reference": 0,
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "react/prop-types": 0
   }
 }
