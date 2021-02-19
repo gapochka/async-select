@@ -8,4 +8,5 @@
   position: absolute;
   top: 2px;
   left: 4px;
+  pointer-events: none;
 }
