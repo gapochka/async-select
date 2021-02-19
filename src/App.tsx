@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { getValue } from 'selectors';
 import Select from 'components/Select';
 import { changeValue } from 'store/actions';
 
@@ -23,21 +22,17 @@ const loadOptions = (inputValue: string, callback: (options: OptionsType[]) => v
 
 const App = () => {
   const dispatch = useDispatch();
-  const { label } = useSelector(getValue);
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (value: string) => setInputValue(value);
-  const handleBlur = () => setInputValue('');
   const handleChange = (value: OptionsType) => dispatch(changeValue(value));
 
   return (
     <>
       <p>inputValue: &quot;{inputValue}&quot;</p>
       <Select
-        value={inputValue}
-        placeholder={label}
+        placeholder="Select"
         loadOptions={loadOptions}
-        onBlur={handleBlur}
         onInputChange={handleInputChange}
         onChange={handleChange}
       />

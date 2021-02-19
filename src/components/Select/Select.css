@@ -1,8 +1,11 @@
 .select {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
 
-.select__input::placeholder {
-  color: black;
+.select__label {
+  position: absolute;
+  top: 2px;
+  left: 4px;
 }
