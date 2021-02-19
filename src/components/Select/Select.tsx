@@ -51,10 +51,10 @@ const Select: React.FC<SelectProps> = ({ placeholder, loadOptions, onBlur, onCha
 
   const handleFocus = () => setShowOptions(true);
 
-  const handleChange = (value: OptionsType) => {
+  const handleChange = (option: OptionsType) => {
     setShowOptions(false);
-    setLabel(value.label);
-    onChange && onChange(value);
+    setLabel(option.label);
+    onChange && onChange(option);
   };
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
