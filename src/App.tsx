@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Select from 'components/Select';
+import { OptionsType } from 'components/Select/List/OptionsType';
 import { changeOption } from 'store/actions';
 
 import 'App.css';
 import items from 'items.json';
-
-interface OptionsType {
-  label: string;
-  value: string;
-}
 
 const filterItems = (inputValue: string) => items.filter(i => i.label.toLowerCase().includes(inputValue.toLowerCase()));
 

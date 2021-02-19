@@ -1,11 +1,8 @@
 import React from 'react';
 
-import './List.css';
+import { OptionsType } from './OptionsType';
 
-interface OptionsType {
-  label: string;
-  value: string;
-}
+import './List.css';
 
 interface ListProps {
   options: Array<OptionsType>;

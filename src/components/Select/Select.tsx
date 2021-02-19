@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 import OutsideClick from 'components/OutsideClick';
+import { OptionsType } from 'components/Select/List/OptionsType';
 import useDebounce from 'hooks/useDebounce';
 
 import './Select.css';
 import List from './List';
-
-interface OptionsType {
-  label: string;
-  value: string;
-}
 
 interface SelectProps {
   placeholder?: string;
