@@ -15,7 +15,7 @@ const initialState = {
 
 const reducer = (state: StateProps = initialState, action: ActionProps) => {
   switch (action.type) {
-    case 'CHANGE_VALUE':
+    case 'CHANGE_OPTION':
       return { ...state, ...action.payload };
     default:
       return state;
