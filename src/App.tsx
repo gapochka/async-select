@@ -14,11 +14,12 @@ interface OptionsType {
 
 const filterItems = (inputValue: string) => items.filter(i => i.label.toLowerCase().includes(inputValue.toLowerCase()));
 
-const loadOptions = (inputValue: string, callback: (options: OptionsType[]) => void) => {
-  setTimeout(() => {
-    callback(filterItems(inputValue));
-  }, 1000);
-};
+const loadOptions = (inputValue: string): Promise<OptionsType[]> =>
+  new Promise(resolve => {
+    setTimeout(() => {
+      resolve(filterItems(inputValue));
+    }, 1000);
+  });
 
 const App = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import OutsideClick from 'components/OutsideClick';
+import useDebounce from 'hooks/useDebounce';
 
 import './Select.css';
 import List from './List';
@@ -12,13 +13,11 @@ interface OptionsType {
 
 interface SelectProps {
   placeholder?: string;
-  loadOptions: (value: string, setSuggestions: (options: OptionsType[]) => void) => void;
+  loadOptions: (value: string) => Promise<OptionsType[]>;
   onBlur?: () => void;
   onChange?: (value: OptionsType) => void;
   onInputChange?: (value: string) => void;
 }
-
-const getUniqId = () => Symbol('id');
 
 const Select: React.FC<SelectProps> = ({ placeholder, loadOptions, onBlur, onChange, onInputChange }) => {
   const [inputValue, setInputValue] = useState('');
@@ -26,28 +25,18 @@ const Select: React.FC<SelectProps> = ({ placeholder, loadOptions, onBlur, onCha
   const [options, setOptions] = useState<OptionsType[]>([]);
   const [showOptions, setShowOptions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const lastCallId = useRef(getUniqId());
+  const debouncedInputValue = useDebounce(inputValue, 500);
 
-  const handleOutsideClick = () => setShowOptions(false);
-
-  const setSuggestions = (id: symbol) => (newOptions: OptionsType[]) => {
-    if (id === lastCallId.current) {
-      setOptions(newOptions);
-    }
-
-    setIsLoading(false);
-  };
-
-  const handleLoadOptions = (value: string) => {
+  useEffect(() => {
     setIsLoading(true);
 
-    const uniqId = getUniqId();
-    lastCallId.current = uniqId;
+    loadOptions(debouncedInputValue).then((options: OptionsType[]) => {
+      setIsLoading(false);
+      setOptions(options);
+    });
+  }, [debouncedInputValue]);
 
-    loadOptions(value, setSuggestions(uniqId));
-  };
-
-  useEffect(() => handleLoadOptions(inputValue), []);
+  const handleOutsideClick = () => setShowOptions(false);
 
   const handleFocus = () => setShowOptions(true);
 
@@ -61,7 +50,6 @@ const Select: React.FC<SelectProps> = ({ placeholder, loadOptions, onBlur, onCha
     const value = event.currentTarget?.value;
 
     setInputValue(value);
-    handleLoadOptions(value);
     onInputChange && onInputChange(value);
   };
 
