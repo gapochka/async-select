@@ -38,31 +38,31 @@ const Select: React.FC<SelectProps> = ({ placeholder, loadOptions, onBlur, onCha
     setIsLoading(false);
   };
 
-  const handleLoadOptions = (val: string) => {
+  const handleLoadOptions = (value: string) => {
     setIsLoading(true);
 
     const uniqId = getUniqId();
     lastCallId.current = uniqId;
 
-    loadOptions(val, setSuggestions(uniqId));
+    loadOptions(value, setSuggestions(uniqId));
   };
 
   useEffect(() => handleLoadOptions(inputValue), []);
 
   const handleFocus = () => setShowOptions(true);
 
-  const handleChange = (val: OptionsType) => {
+  const handleChange = (value: OptionsType) => {
     setShowOptions(false);
-    setLabel(val.label);
-    onChange && onChange(val);
+    setLabel(value.label);
+    onChange && onChange(value);
   };
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const val = event.currentTarget?.value;
+    const value = event.currentTarget?.value;
 
-    setInputValue(val);
-    handleLoadOptions(val);
-    onInputChange && onInputChange(val);
+    setInputValue(value);
+    handleLoadOptions(value);
+    onInputChange && onInputChange(value);
   };
 
   const handleBlur = () => {
